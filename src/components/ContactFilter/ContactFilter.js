@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { contactFilter } from 'redux/slices/filterSlice';
+import { BrowserRouter } from 'react-router-dom';
 import css from '../../styles/Common.module.css';
 
 const ContactFilter = () => {

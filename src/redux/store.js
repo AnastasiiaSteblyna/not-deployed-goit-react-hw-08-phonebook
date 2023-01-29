@@ -1,4 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
+
 import {
   persistStore,
   persistReducer,
@@ -11,32 +13,38 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { myContactSlice } from './slices/contactSlice';
-import { myFilterSlice } from './slices/filterSlice';
+import { ContactsApi } from './api/ContactsApi';
+import { AuthApi } from './api/AuthApi';
+import { FilterSlice } from './slice/FilterSlice';
+import { AuthSlice } from './slice/AuthSlise';
 
-const persistConfig = {
-  key: 'root',
-  storage,
+const authPersistConfig = {
+  key: 'auth',
+  storage: storage,
+  whitelist: ['token'],
 };
 
-const persistedContactReducer = persistReducer(
-  persistConfig,
-  myContactSlice.reducer
-);
+const persistedReducer = persistReducer(authPersistConfig, AuthSlice.reducer);
 
 export const store = configureStore({
   reducer: {
-    contacts: persistedContactReducer,
-
-    filter: myFilterSlice.reducer,
+    auth: persistedReducer,
+    filter: FilterSlice.reducer,
+    [AuthApi.reducerPath]: AuthApi.reducer,
+    [ContactsApi.reducerPath]: ContactsApi.reducer,
   },
-  middleware(getDefaultMiddleware) {
-    return getDefaultMiddleware({
+
+  middleware: getDefaultMiddleware => [
+    ...getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    });
-  },
+    }),
+    AuthApi.middleware,
+    ContactsApi.middleware,
+  ],
 });
 
 export const persistor = persistStore(store);
+
+setupListeners(store.dispatch);
