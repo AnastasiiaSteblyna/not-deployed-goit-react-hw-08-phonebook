@@ -1,33 +1,37 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/slices/contactSlice';
-import css from '../../styles/Common.module.css';
+import { useGetContactQuery } from 'redux/api/ContactsApi';
+import { Spinner } from '@chakra-ui/react';
+
+import ContactListItem from './ContactListItem';
 
 const ContactList = () => {
-  const filter = useSelector(state => state.filter.filter);
-  const contacts = useSelector(state => state.contacts.contacts);
-  const dispatch = useDispatch();
+  const { data, isFetching } = useGetContactQuery();
+  const filter = useSelector(state => state.filter);
 
-  const renderContacts = contacts.filter(contact => {
-    return contact.name.toLowerCase().includes(filter.toLowerCase());
-  });
+  const contacts =
+    data && data.filter(contact => contact.name.toLowerCase().includes(filter));
 
   return (
-    <ul className={css.list}>
-      {renderContacts.map(({ id, name, number }) => (
-        <li className={css.item} key={id}>
-          {name}: {number}
-          <button
-            className={css.btnDelete}
-            type="button"
-            onClick={() => dispatch(deleteContact(id))}
-          >
-            Delete
-          </button>
-        </li>
-      ))}
-    </ul>
+    <>
+      {isFetching && (
+        <Spinner
+          thickness="4px"
+          speed="0.95s"
+          emptyColor="gray.200"
+          color="blue.200"
+          size="xl"
+          ml="190"
+        />
+      )}
+      {data && data.length !== 0 && (
+        <ul>
+          {contacts.map(contact => (
+            <ContactListItem key={contact.id} {...contact} />
+          ))}
+        </ul>
+      )}
+      {data && data.length === 0 && <p>Add your contacts to see them here</p>}
+    </>
   );
 };
 

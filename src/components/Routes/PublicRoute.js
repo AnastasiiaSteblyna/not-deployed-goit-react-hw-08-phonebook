@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getLoggedin } from 'redux/slice/AuthSlise';
+import { getLoggedin } from 'redux/slices/AuthSlice';
 
 const PublicRoute = ({ children, restricted = false }) => {
   const isLoggedin = useSelector(getLoggedin);

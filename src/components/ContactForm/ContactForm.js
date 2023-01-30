@@ -1,82 +1,86 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+import { Stack, Input, Button } from '@chakra-ui/react';
 
-import { useState } from 'react';
-import { nanoid } from 'nanoid';
-import { addContact } from 'redux/slices/contactSlice';
-import css from '../../styles/Common.module.css';
+import {
+  useGetContactQuery,
+  useAddContactsMutation,
+} from 'redux/api/ContactsApi';
 
 const ContactForm = () => {
+  const [addContacts, { isLoading, isSuccess, error }] =
+    useAddContactsMutation();
+  const { data } = useGetContactQuery();
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const [notify, setNotify] = useState('');
 
-  const contacts = useSelector(state => state.contacts.contacts);
-  const dispatch = useDispatch();
+  useEffect(() => {
+    isSuccess &&
+      toast.success(` ${notify} succesfully added`, {
+        autoClose: 800,
+      });
+    error && toast.error('something went wrong');
+  }, [error, isSuccess, notify]);
 
-  const addNewContact = ({ name, number }) => {
-    const contact = {
-      id: nanoid(),
-      name,
-      number,
-    };
-
-    if (
-      contacts.find(item => {
-        return item.name === contact.name;
-      })
-    ) {
-      return alert(`${contact.name} is already in contacts`);
-    }
-    dispatch(addContact(contact));
-  };
-
-  const onFormInput = e => {
-    if (e.currentTarget.name === 'name') {
-      setName(e.currentTarget.value);
-    }
-    if (e.currentTarget.name === 'number') {
-      setNumber(e.currentTarget.value);
+  const handleInputChange = ({ currentTarget: { name, value } }) => {
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
+      case 'number':
+        setNumber(value);
+        break;
+      default:
+        return;
     }
   };
 
-  const onFormSubmit = e => {
-    e.preventDefault();
-    addNewContact({ name, number });
-    e.currentTarget.reset();
+  const handleSubmit = event => {
+    event.preventDefault();
+    setNotify(name);
+    data.every(item => item.name.toLowerCase() !== name.toLowerCase())
+      ? addContacts({
+          name: name,
+          number: number,
+        })
+      : toast.error(`${name} is alredy in contacts!`);
+    setName('');
+    setNumber('');
   };
 
   return (
-    <>
-      <form className={css.form} onSubmit={onFormSubmit}>
-        <h1 className={css.text}>Phonebook</h1>
-        <label htmlFor="name">Name</label>
-        <input
-          onChange={onFormInput}
-          className={css.input}
-          placeholder="Stepan Stepanovych"
+    <form autoComplete="off" onSubmit={handleSubmit}>
+      <Stack w="400px" mx="auto" my="6" spacing={4}>
+        <p>Name</p>
+
+        <Input
+          onChange={handleInputChange}
+          value={name}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
+          placeholder="Davyd Steblyna"
         />
 
-        <label htmlFor="number">Number</label>
-        <input
-          onChange={onFormInput}
-          className={css.input}
-          placeholder="096-111-11-11"
+        <p>Number</p>
+        <Input
+          onChange={handleInputChange}
+          value={number}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
-        ></input>
-
-        <button type="submit" className={css.btn}>
-          Add contact
-        </button>
-      </form>
-    </>
+          placeholder="+380..."
+        />
+        <Button bg={'blue.100'} type="submit">
+          {isLoading ? 'Adding...' : 'Add Contact'}
+        </Button>
+      </Stack>
+    </form>
   );
 };
 

@@ -1,24 +1,27 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { contactFilter } from 'redux/slices/filterSlice';
-import { BrowserRouter } from 'react-router-dom';
-import css from '../../styles/Common.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { Stack, Input, Text } from '@chakra-ui/react';
+import { setFilter } from 'redux/slices/FilterSlice';
 
 const ContactFilter = () => {
   const dispatch = useDispatch();
+  const filterValue = useSelector(state => state.filter);
+
+  const onFilterChange = event => {
+    dispatch(setFilter(event.currentTarget.value.toLowerCase()));
+  };
 
   return (
-    <div className={css.form}>
-      <h2>Contacts</h2>
-      <label>Find contacts by name</label>
-      <input
-        onChange={e => dispatch(contactFilter(e.currentTarget.value))}
-        className={css.input}
+    <Stack w="400px" mx="auto" my="6" spacing={3}>
+      <Text color="grey.800" fontWeight="bold">
+        Find contacts by name
+      </Text>
+      <Input
+        onChange={onFilterChange}
+        value={filterValue}
         type="text"
         name="filter"
-        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
       />
-    </div>
+    </Stack>
   );
 };
 

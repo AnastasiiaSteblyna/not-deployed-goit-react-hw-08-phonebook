@@ -1,23 +1,22 @@
 import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-
 import { useSelector } from 'react-redux';
-import { getLoggedin, getToken } from 'redux/slice/AuthSlise';
-import { useLazyGetCurrentUserQuery } from 'redux/api/authApi';
-
-import PublicRoute from 'сomponents/Routes/PublicRoute';
-import PrivateRoute from 'сomponents/Routes/PrivateRoute';
-
 import { Box, ChakraProvider } from '@chakra-ui/react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect } from 'react';
 
-const Layout = lazy(() => import('сomponents/Layout/Layout'));
-const AuthNavPage = lazy(() => import('pages/AuthNavPage/AuthNavPage'));
-const SignUpPage = lazy(() => import('pages/SingUpPage/SingUpPage'));
-const SignInPage = lazy(() => import('pages/SignInPage/SignInPage'));
-const ContactsPage = lazy(() => import('pages/ContactsPage/ContactsPage'));
+import { getLoggedin, getToken } from '../redux/slices/AuthSlice';
+import { useLazyGetCurrentUserQuery } from '../redux/api/AuthApi';
+
+import PublicRoute from './Routes/PublicRoute';
+import PrivateRoute from './Routes/PrivateRoute';
+
+const Layout = lazy(() => import('./Layout/Layout'));
+const AuthNavPage = lazy(() => import('../pages/AuthNavPage'));
+const SignUpPage = lazy(() => import('../pages/SignUpPage'));
+const SignInPage = lazy(() => import('../pages/SignInPage'));
+const ContactsPage = lazy(() => import('../pages/ContactsPage'));
 
 const App = () => {
   const token = useSelector(getToken);
