@@ -26,7 +26,6 @@ const WithBackgroundImage = () => {
         px={useBreakpointValue({ base: 4, md: 8 })}
         bgGradient={'linear(to-r, blackAlpha.100, transparent)'}
       >
-        {/* kjlkjlkjlkjlkj */}
         <Stack maxW={'2xl'} align={'flex-start'} spacing={6}>
           <Text
             color={'white'}
