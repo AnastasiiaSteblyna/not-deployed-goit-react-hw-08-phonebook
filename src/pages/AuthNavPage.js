@@ -9,14 +9,11 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 
-// import Image from '../../image/dark-macbook.png';
-
 const WithBackgroundImage = () => {
   return (
     <Flex
       w={'full'}
       h={'100vh'}
-      // backgroundImage={`url(${Image})`}/
       backgroundSize={'cover'}
       backgroundPosition={'center center'}
     >
@@ -24,7 +21,7 @@ const WithBackgroundImage = () => {
         w={'full'}
         justify={'center'}
         px={useBreakpointValue({ base: 4, md: 8 })}
-        bgGradient={'linear(to-r, blackAlpha.100, transparent)'}
+        bgGradient={'radial( transparent, blackAlpha.700)'}
       >
         <Stack maxW={'2xl'} align={'flex-start'} spacing={6}>
           <Text
