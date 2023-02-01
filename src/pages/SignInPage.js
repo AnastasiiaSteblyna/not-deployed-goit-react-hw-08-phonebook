@@ -10,13 +10,12 @@ import {
   Stack,
   Button,
   Heading,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import { toast } from 'react-toastify';
 
 import { useUserLoginMutation } from 'redux/api/AuthApi';
 
-// import Image from '../../image/dark-macbook.png';
+import Background from '../images/bg.jpg';
 
 const LoginView = () => {
   const [email, setEmail] = useState('');
@@ -61,7 +60,7 @@ const LoginView = () => {
       minH={'100vh'}
       align={'center'}
       justify={'center'}
-      // backgroundImage={`url(${Image})`}
+      backgroundImage={`url(${Background})`}
       backgroundSize={'cover'}
       backgroundPosition={'center center'}
     >
@@ -69,15 +68,18 @@ const LoginView = () => {
 
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
-          <Heading fontSize={'4xl'} color={'white'}>
-            Sign in to your account
+          <Heading
+            fontSize={'4xl'}
+            textAlign={'center'}
+            color={'blackAlpha.700'}
+          >
+            Sign in
           </Heading>
         </Stack>
         <Box
           as="form"
           rounded={'lg'}
-          bg={useColorModeValue('grey', 'gray.700')}
-          opacity={0.75}
+          bg={'blackAlpha.400'}
           boxShadow={'lg'}
           p={8}
           autoComplete="off"
@@ -85,7 +87,7 @@ const LoginView = () => {
         >
           <Stack spacing={4}>
             <FormControl id="email">
-              <FormLabel color={'white'}>Email address</FormLabel>
+              <FormLabel color={'white'}>Email</FormLabel>
               <Input
                 type="email"
                 pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"
@@ -104,29 +106,22 @@ const LoginView = () => {
                 value={password}
                 name="password"
                 color={'white'}
+                mb={'2'}
               />
             </FormControl>
-            <Stack spacing={10}>
+            <Stack spacing={5}>
               <Button
-                disabled={email && password ? false : true}
                 type="submit"
-                bg={'blue.700'}
+                loadingText="Submitting"
+                bg={'blackAlpha.600'}
                 color={'white'}
-                _hover={{
-                  bg: 'blue.500',
-                }}
+                _hover={{ bg: 'blackAlpha.400' }}
               >
                 Sign in
+              </Button>{' '}
+              <Button type="button" onClick={goBack}>
+                Go back
               </Button>
-              <Stack
-                direction={{ base: 'column', sm: 'row' }}
-                align={'start'}
-                justify={'center'}
-              >
-                <Button type="button" onClick={goBack}>
-                  goBack
-                </Button>
-              </Stack>
             </Stack>
           </Stack>
         </Box>

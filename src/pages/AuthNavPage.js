@@ -9,6 +9,8 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 
+import Background from '../images/bg.jpg';
+
 const WithBackgroundImage = () => {
   return (
     <Flex
@@ -16,38 +18,41 @@ const WithBackgroundImage = () => {
       h={'100vh'}
       backgroundSize={'cover'}
       backgroundPosition={'center center'}
+      backgroundImage={`url(${Background})`}
     >
       <VStack
         w={'full'}
         justify={'center'}
         px={useBreakpointValue({ base: 4, md: 8 })}
-        bgGradient={'radial( transparent, blackAlpha.700)'}
+        bg={'blackAlpha.200'}
       >
-        <Stack maxW={'2xl'} align={'flex-start'} spacing={6}>
+        <Stack maxW={'2xl'} align={'center'} spacing={6}>
           <Text
-            color={'white'}
+            color={'blackAlpha.800'}
+            mb={'4'}
             fontWeight={700}
             lineHeight={1.2}
             fontSize={useBreakpointValue({ base: '3xl', md: '4xl' })}
           >
-            Phonebook
+            PHONEBOOK
           </Text>
+
           <Stack direction={'row'}>
             <Button
               as={NavLink}
               to="register"
-              bg={'blue.200'}
+              bg={'blackAlpha.600'}
               color={'white'}
-              _hover={{ bg: 'blue.300' }}
+              _hover={{ bg: 'blackAlpha.200' }}
             >
               Sing up
             </Button>
             <Button
               as={NavLink}
               to="login"
-              bg={'whiteAlpha.300'}
-              color={'white'}
-              _hover={{ bg: 'whiteAlpha.500' }}
+              bg={'whiteAlpha.700'}
+              color={'blackAlpha.800'}
+              _hover={{ bg: 'whiteAlpha.400' }}
             >
               Sign in
             </Button>

@@ -14,16 +14,12 @@ import {
   Button,
   Heading,
   Text,
-  useColorModeValue,
   Link,
 } from '@chakra-ui/react';
 
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-
-// import Image from '../../image/dark-macbook.png';
+import Background from '../images/bg.jpg';
 
 const SignupView = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -59,29 +55,33 @@ const SignupView = () => {
   const goBack = () => {
     navigate(location?.state?.from || '/');
   };
+
   return (
     <Flex
       minH={'100vh'}
       align={'center'}
       justify={'center'}
-      // backgroundImage={`url(${Image})`}
+      backgroundImage={`url(${Background})`}
       backgroundSize={'cover'}
       backgroundPosition={'center center'}
     >
       {isSuccess && <Navigate to="/contacts" replace={true} />}
 
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+      <Stack spacing={5} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
-          <Heading fontSize={'4xl'} textAlign={'center'} color={'white'}>
+          <Heading
+            fontSize={'4xl'}
+            textAlign={'center'}
+            color={'blackAlpha.700'}
+          >
             Sign up
           </Heading>
         </Stack>
         <Box
           as="form"
           rounded={'lg'}
-          bg={useColorModeValue('grey', 'gray.700')}
+          bg={'blackAlpha.400'}
           boxShadow={'lg'}
-          opacity={0.75}
           onSubmit={handleSubmit}
           p={8}
         >
@@ -112,49 +112,30 @@ const SignupView = () => {
               <InputGroup>
                 <Input
                   onChange={handleInputChange}
-                  type={showPassword ? 'text' : 'password'}
+                  type={'password'}
                   value={password}
                   minLength={7}
                   name="password"
                   color={'white'}
                 />
-                <InputRightElement h={'full'}>
-                  <Button
-                    variant={'ghost'}
-                    onClick={() =>
-                      setShowPassword(showPassword => !showPassword)
-                    }
-                  >
-                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
+                <InputRightElement h={'full'}></InputRightElement>
               </InputGroup>
             </FormControl>
-            <Stack spacing={10} pt={2}>
+            <Stack spacing={5} pt={2}>
               <Button
                 type="submit"
-                disabled={name && email && password ? false : true}
                 loadingText="Submitting"
-                size="lg"
-                bg={'blue.700'}
+                bg={'blackAlpha.600'}
                 color={'white'}
-                _hover={{
-                  bg: 'blue.500',
-                }}
+                _hover={{ bg: 'blackAlpha.400' }}
               >
                 Sign up
               </Button>
-            </Stack>
-            <Stack
-              direction={{ base: 'column', sm: 'row' }}
-              align={'start'}
-              justify={'center'}
-            >
               <Button type="button" onClick={goBack}>
-                goBack
+                Go back
               </Button>
             </Stack>
-            <Stack pt={6}>
+            <Stack pt={4}>
               <Text align={'center'}>
                 Already a user?{' '}
                 <Link color={'white'} as={NavLink} to="/login">
