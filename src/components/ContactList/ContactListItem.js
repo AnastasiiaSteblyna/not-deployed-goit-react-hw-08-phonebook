@@ -22,12 +22,16 @@ const ContactListItem = ({ name, number, id }) => {
         justifyContent="space-between"
         w="400px"
         mb="5"
+        color={'white'}
       >
-        {name} &bull; {number}
+        {name} &bull; &bull; &bull; {number}
         <Button
           type="button"
           onClick={() => deleteContacts(id)}
           disabled={isDeleting}
+          bg={'blackAlpha.400'}
+          color={'white'}
+          _hover={{ bg: 'blackAlpha.300' }}
         >
           {isDeleting ? 'Deleting' : 'Delete'}
         </Button>

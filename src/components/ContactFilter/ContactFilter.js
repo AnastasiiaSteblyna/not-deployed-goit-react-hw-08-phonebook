@@ -12,10 +12,11 @@ const ContactFilter = () => {
 
   return (
     <Stack w="400px" mx="auto" my="6" spacing={3}>
-      <Text color="grey.800" fontWeight="bold">
+      <Text color="white" fontWeight="bold">
         Find contacts by name
       </Text>
       <Input
+        color={'white'}
         onChange={onFilterChange}
         value={filterValue}
         type="text"

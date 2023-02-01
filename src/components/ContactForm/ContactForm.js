@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { Stack, Input, Button } from '@chakra-ui/react';
+import { Stack, Input, Button, FormControl, FormLabel } from '@chakra-ui/react';
 
 import {
   useGetContactQuery,
@@ -52,31 +52,40 @@ const ContactForm = () => {
   return (
     <form autoComplete="off" onSubmit={handleSubmit}>
       <Stack w="400px" mx="auto" my="6" spacing={4}>
-        <p>Name</p>
-
-        <Input
-          onChange={handleInputChange}
-          value={name}
-          type="text"
-          name="name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
-          placeholder="Davyd Steblyna"
-        />
-
-        <p>Number</p>
-        <Input
-          onChange={handleInputChange}
-          value={number}
-          type="tel"
-          name="number"
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          required
-          placeholder="+380..."
-        />
-        <Button bg={'blue.100'} type="submit">
+        <FormControl id="name">
+          <FormLabel color={'white'}>Name</FormLabel>
+          <Input
+            color={'white'}
+            onChange={handleInputChange}
+            value={name}
+            type="text"
+            name="name"
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            required
+            placeholder="Davyd Steblyna"
+          />
+        </FormControl>
+        <FormControl id="name">
+          <FormLabel color={'white'}>Number</FormLabel>
+          <Input
+            color={'white'}
+            onChange={handleInputChange}
+            value={number}
+            type="tel"
+            name="number"
+            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            required
+            placeholder="+380..."
+          />
+        </FormControl>
+        <Button
+          bg={'blackAlpha.600'}
+          color={'white'}
+          _hover={{ bg: 'blackAlpha.400' }}
+          type="submit"
+        >
           {isLoading ? 'Adding...' : 'Add Contact'}
         </Button>
       </Stack>
