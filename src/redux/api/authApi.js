@@ -25,7 +25,6 @@ export const AuthApi = createApi({
         body: newUser,
       }),
     }),
-
     userLogin: builder.mutation({
       query: user => ({
         url: `/users/login`,
@@ -33,7 +32,6 @@ export const AuthApi = createApi({
         body: user,
       }),
     }),
-
     userLogout: builder.mutation({
       query: () => ({
         url: `/users/logout`,

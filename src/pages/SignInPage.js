@@ -21,6 +21,7 @@ const LoginView = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [userLogin, { isSuccess, isError }] = useUserLoginMutation();
+
   useEffect(() => {
     isError && toast.error('Invalid email or password');
   }, [isSuccess, isError]);
